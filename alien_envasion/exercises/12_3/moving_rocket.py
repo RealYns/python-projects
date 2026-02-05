@@ -1,4 +1,3 @@
-import sys
 import pygame
 from settings import Settings
 from rocket import Rocket
