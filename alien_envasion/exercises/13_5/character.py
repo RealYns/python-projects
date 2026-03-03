@@ -35,3 +35,6 @@ class Character():
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
+    def character_center(self):
+        self.center = self.screen_rect.centerx
+

@@ -1,7 +1,9 @@
 import sys
+from time import sleep
 import pygame
 from character import Character
 from ball import Ball
+
 
 def check_keydown_events(event, character):
     if event.key == pygame.K_RIGHT:
@@ -25,19 +27,31 @@ def check_events(character):
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, character)
 
-def update_screen(ai_settings, screen, character, ball):
-    screen.fill(ai_settings.bg_color)
+def update_game(character, ball, stats):
     character.update()
-    character.blitme()
     ball.update()
+    ball_collision(character, ball, stats)
+
+def update_screen(ai_settings, screen, character, ball, stats):
+    screen.fill(ai_settings.bg_color)
+    character.blitme()
     ball.blitme()
     pygame.display.flip()
-    ball_collision(character, ball)
+
+def ball_not_caught(character, ball, stats):
+    if stats.character_left > 0:
+
+        stats.character_left -= 1
+        character.character_center()
+        ball.reset_ball()
+        sleep(0.5)
+    else:
+        stats.game_active = False
 
 
-def ball_collision(character, ball):
+
+def ball_collision(character, ball, stats):
     if character.rect.colliderect(ball.rect):
         ball.reset_ball()
-
     elif ball.check_bottom():
-        ball.reset_ball()
+        ball_not_caught(character, ball, stats)

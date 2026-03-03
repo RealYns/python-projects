@@ -5,3 +5,4 @@ class Settings():
         self.bg_color = (0, 0, 0)
         self.ball_drop_speed = 1.5
         self.character_speed = 1.5
+        self.character_lives = 3
