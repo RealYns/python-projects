@@ -1,4 +1,4 @@
-class Settings1():
+class Settings():
 
     def __init__(self):
         self.screen_width = 1600
@@ -10,3 +10,6 @@ class Settings1():
         self.bullet_height = 6
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
+        self.target_speed_factor = 1
+        self.direction = 1
+        self.ship_lives = 3
