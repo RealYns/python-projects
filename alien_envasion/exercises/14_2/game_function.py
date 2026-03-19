@@ -58,6 +58,7 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, bullets, mo
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         stats.reset_stats()
+        ai_settings.initialize_dynamic_settings()
         stats.game_active = True
         bullets.empty()
         ship.rect.centery = ship.screen_rect.centery
@@ -77,16 +78,17 @@ def update_screen(ai_settings, screen, ship, bullets, target, stats, play_button
 
 def update_bullets(ai_settings, bullets, target, stats):
     bullets.update()
-    check_bullet_target_collisions(target, bullets)
+    check_bullet_target_collisions(target, bullets, ai_settings)
 
     for bullet in bullets.copy():
         if bullet.rect.left >= ai_settings.screen_width:
             bullets.remove(bullet)
             target_missed(stats)
 
-def check_bullet_target_collisions(target, bullets):
+def check_bullet_target_collisions(target, bullets, ai_settings):
     for bullet in bullets.copy():
         if bullet.rect.colliderect(target.rect):
+            ai_settings.increase_speed()
             bullets.remove(bullet)
             target.hit()
 
